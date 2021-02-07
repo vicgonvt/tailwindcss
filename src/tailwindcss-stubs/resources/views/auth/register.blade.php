@@ -1,58 +1,84 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="flex items-center px-6 md:px-0">
-    <div class="w-full max-w-md md:mx-auto">
-        <div class="rounded shadow">
-            <div class="font-medium text-lg text-teal-darker bg-teal p-3 rounded-t">
-                Register
-            </div>
-            <div class="bg-white p-3 rounded-b">
-                <form class="form-horizontal" method="POST" action="{{ route('register') }}">
-                    {{ csrf_field() }}
+    <div class="container mx-auto">
+        <div class="flex flex-wrap justify-center">
+            <div class="w-full max-w-sm">
+                <div class="flex flex-col break-words bg-white border border-2 rounded shadow-md">
 
-                    <div class="flex items-stretch mb-3">
-                        <label for="name" class="text-right font-semibold text-grey-dark text-sm pt-2 pr-3 align-middle w-1/4">Name</label>
-                        <div class="flex flex-col w-3/4">
-                            <input id="name" type="text" class="flex-grow h-8 px-2 border rounded {{ $errors->has('name') ? 'border-red-dark' : 'border-grey-light' }}" name="name" value="{{ old('name') }}" autofocus>
-                            {!! $errors->first('name', '<span class="text-red-dark text-sm mt-2">:message</span>') !!}
-                        </div>
+                    <div class="font-semibold bg-gray-200 text-gray-700 py-3 px-6 mb-0">
+                        {{ __('Register') }}
                     </div>
 
-                    <div class="flex items-stretch mb-3">
-                        <label for="email" class="text-right font-semibold text-grey-dark text-sm pt-2 pr-3 align-middle w-1/4">E-Mail Address</label>
-                        <div class="flex flex-col w-3/4">
-                            <input id="email" type="email" class="flex-grow h-8 px-2 border rounded {{ $errors->has('email') ? 'border-red-dark' : 'border-grey-light' }}" name="email" value="{{ old('email') }}" required>
-                            {!! $errors->first('email', '<span class="text-red-dark text-sm mt-2">:message</span>') !!}
-                        </div>
-                    </div>
+                    <form class="w-full p-6" method="POST" action="{{ route('register') }}">
+                        @csrf
 
-                    <div class="flex items-stretch mb-4">
-                        <label for="password" class="text-right font-semibold text-grey-dark text-sm pt-2 pr-3 align-middle w-1/4">Password</label>
-                        <div class="flex flex-col w-3/4">
-                            <input id="password" type="password" class="flex-grow h-8 px-2 rounded border {{ $errors->has('password') ? 'border-red-dark' : 'border-grey-light' }}" name="password" required>
-                            {!! $errors->first('password', '<span class="text-red-dark text-sm mt-2">:message</span>') !!}
-                        </div>
-                    </div>
+                        <div class="flex flex-wrap mb-6">
+                            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">
+                                {{ __('Name') }}:
+                            </label>
 
-                    <div class="flex items-stretch mb-4">
-                        <label for="password_confirmation" class="text-right font-semibold text-grey-dark text-sm pt-2 pr-3 align-middle w-1/4">Confirm Password</label>
-                        <div class="flex flex-col w-3/4">
-                            <input id="password_confirmation" type="password" class="flex-grow h-8 px-2 rounded border {{ $errors->has('password_confirmation') ? 'border-red-dark' : 'border-grey-light' }}" name="password_confirmation" required>
-                            {!! $errors->first('password_confirmation', '<span class="text-red-dark text-sm mt-2">:message</span>') !!}
-                        </div>
-                    </div>
+                            <input id="name" type="text" class="form-input w-full @error('name')  border-red-500 @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
-                    <div class="flex">
-                        <div class="w-3/4 ml-auto">
-                            <button type="submit" class="bg-teal hover:bg-teal-dark text-white text-sm font-semibold py-2 px-4 rounded mr-3">
-                                Register
+                            @error('name')
+                                <p class="text-red-500 text-xs italic mt-4">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        <div class="flex flex-wrap mb-6">
+                            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">
+                                {{ __('E-Mail Address') }}:
+                            </label>
+
+                            <input id="email" type="email" class="form-input w-full @error('email') border-red-500 @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                            @error('email')
+                                <p class="text-red-500 text-xs italic mt-4">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        <div class="flex flex-wrap mb-6">
+                            <label for="password" class="block text-gray-700 text-sm font-bold mb-2">
+                                {{ __('Password') }}:
+                            </label>
+
+                            <input id="password" type="password" class="form-input w-full @error('password') border-red-500 @enderror" name="password" required autocomplete="new-password">
+
+                            @error('password')
+                                <p class="text-red-500 text-xs italic mt-4">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        <div class="flex flex-wrap mb-6">
+                            <label for="password-confirm" class="block text-gray-700 text-sm font-bold mb-2">
+                                {{ __('Confirm Password') }}:
+                            </label>
+
+                            <input id="password-confirm" type="password" class="form-input w-full" name="password_confirmation" required autocomplete="new-password">
+                        </div>
+
+                        <div class="flex flex-wrap">
+                            <button type="submit" class="inline-block align-middle text-center select-none border font-bold whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline text-gray-100 bg-blue-500 hover:bg-blue-700">
+                                {{ __('Register') }}
                             </button>
+
+                            <p class="w-full text-xs text-center text-gray-700 mt-8 -mb-4">
+                                {{ __('Already have an account?') }}
+                                <a class="text-blue-500 hover:text-blue-700 no-underline" href="{{ route('login') }}">
+                                    {{ __('Login') }}
+                                </a>
+                            </p>
                         </div>
-                    </div>
-                </form>
+                    </form>
+
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
